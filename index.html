@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>育成ゲーム</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1 id="game-title"></h1>
+        <div id="character-screen">
+            <div id="character-display"></div>
+        </div>
+        <div id="speech-bubble" class="hidden"></div>
+        <div id="status-display">
+            <!-- パラメータはJSで動的に表示 -->
+        </div>
+        <div id="actions-panel">
+            <!-- アクションボタンはJSで動的に表示 -->
+        </div>
+    </div>
+
+    <!-- YAMLパーサーライブラリ -->
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <!-- ゲームエンジン -->
+    <script src="engine.js"></script>
+</body>
+</html> 
