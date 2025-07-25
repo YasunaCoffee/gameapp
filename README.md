@@ -6,7 +6,7 @@
 
 このプロジェクトは、**AIコーディングアシスタント（[Cursor](https://cursor.sh/)など）がゼロから構築できる**ように、`.cursorrules`ファイルに全手順が記述されているのが最大の特徴です。
 
-![game screenshot](https://user-images.githubusercontent.com/12345/67890.png)  <!-- TODO: 後でスクリーンショットに差し替えてください -->
+![game screenshot](image.png)
 
 ## ✨ 主な特徴
 
