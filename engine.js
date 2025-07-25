@@ -44,11 +44,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     startGame();
 });
 
-// 設定ファイル(rules.yml)を読み込む
-async function loadConfig() {
-    const response = await fetch('rules.yml');
-    const ymlText = await response.text();
-    return jsyaml.load(ymlText);
+// 設定を読み込む
+function loadConfig() {
+    // グローバル変数 gameRulesYAML からYAML文字列を読み込む
+    return jsyaml.load(gameRulesYAML);
 }
 
 // HTML要素を取得する
