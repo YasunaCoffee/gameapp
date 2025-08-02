@@ -9,88 +9,125 @@
 
 - name: "Step 4: Define Game Rules in rules.js"
   prompt: |
-    `rules.js`を作成し、ゲームのすべてのルールをYAML形式の文字列として`gameRulesYAML`という定数に代入します。以下の内容をコピーしてください。
+    `rules.js`を作成し、ゲームのすべてのルールをJavaScriptオブジェクトとして`gameRules`という定数に代入します。以下の内容をコピーしてください。
     ```javascript
     // ゲームのルールを定義するJavaScriptファイル
-    const gameRulesYAML = \`
-    # ------------------------------------
-    # 育成ゲームのルール設定
-    # ------------------------------------
-    # ゲームの基本設定
-    game_title: "育成ゲーム"
-    # ------------------------------------
-    # キャラクターの定義
-    # ------------------------------------
-    characters:
-      - id: "egg"
-        name: "タマゴ"
-        emoji: "🥚"
-        evolve_to: "child"
-        evolve_conditions:
-          - type: "time"
-            value: 10
-      - id: "child"
-        name: "こども"
-        emoji: "🐣"
-        evolutions:
-          - to: "adult_angel"
-            conditions:
-              - {type: "parameter", target: "mood", value: 70}
-              - {type: "time", value: 60}
-          - to: "adult_devil"
-            conditions:
-              - {type: "time", value: 60}
-      - id: "adult_angel"
-        name: "てんし"
-        emoji: "😇"
-        evolutions:
-          - to: "tomb"
-            conditions:
-              - {type: "time", value: 180}
-      - id: "adult_devil"
-        name: "あくま"
-        emoji: "😈"
-        evolutions:
-          - to: "tomb"
-            conditions:
-              - {type: "time", value: 120}
-      - id: "tomb"
-        name: "おはか"
-        emoji: "🪦"
-        is_final_state: true
-    # ------------------------------------
-    # パラメータの定義
-    # ------------------------------------
-    parameters:
-      - {id: "hunger", name: "おなか", max_value: 100, initial_value: 80, decrease_per_second: 1}
-      - {id: "mood", name: "ごきげん", max_value: 100, initial_value: 50, decrease_per_second: 2}
-    # ------------------------------------
-    # プレイヤーのアクション（お世話ボタン）の定義
-    # ------------------------------------
-    actions:
-      - id: "feed"
-        name: "ごはん"
-        message: "おいしい！"
-        effects:
-          - {target: "hunger", value: 30}
-      - id: "play"
-        name: "あそぶ"
-        message: "たのしいな！"
-        effects:
-          - {target: "mood", value: 20}
-    \`;
+    const gameRules = {
+        game_title: "育成ゲーム",
+        
+        characters: [
+            {
+                id: "egg",
+                name: "タマゴ",
+                emoji: "🥚",
+                evolve_to: "child",
+                evolve_conditions: [
+                    { type: "time", value: 10 }
+                ]
+            },
+            {
+                id: "child",
+                name: "こども",
+                emoji: "🐣",
+                evolutions: [
+                    {
+                        to: "adult_angel",
+                        conditions: [
+                            { type: "parameter", target: "mood", value: 70 },
+                            { type: "time", value: 60 }
+                        ]
+                    },
+                    {
+                        to: "adult_devil",
+                        conditions: [
+                            { type: "time", value: 60 }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "adult_angel",
+                name: "てんし",
+                emoji: "😇",
+                evolutions: [
+                    {
+                        to: "tomb",
+                        conditions: [
+                            { type: "time", value: 180 }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "adult_devil",
+                name: "あくま",
+                emoji: "😈",
+                evolutions: [
+                    {
+                        to: "tomb",
+                        conditions: [
+                            { type: "time", value: 120 }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "tomb",
+                name: "おはか",
+                emoji: "🪦",
+                is_final_state: true
+            }
+        ],
+        
+        parameters: [
+            {
+                id: "hunger",
+                name: "おなか",
+                max_value: 100,
+                initial_value: 80,
+                decrease_per_second: 1
+            },
+            {
+                id: "mood",
+                name: "ごきげん",
+                max_value: 100,
+                initial_value: 50,
+                decrease_per_second: 2
+            }
+        ],
+        
+        actions: [
+            {
+                id: "feed",
+                name: "ごはん",
+                message: "おいしい！",
+                effects: [
+                    { target: "hunger", value: 30 }
+                ]
+            },
+            {
+                id: "play",
+                name: "あそぶ",
+                message: "たのしいな！",
+                effects: [
+                    { target: "mood", value: 20 }
+                ]
+            }
+        ]
+    };
     ```
 
 - name: "Step 5: Implement Game Engine"
   prompt: |
-    `engine.js`にゲームのロジックを実装します。サウンドやファイルフェッチは不要です。
-    - `rules.js`で定義されたグローバル変数`gameRulesYAML`を読み込んで解釈します。
+    `engine.js`にゲームのロジックを実装します。サーバーやファイルフェッチは不要です。
+    - `rules.js`で定義されたグローバル変数`gameRules`を直接読み込んで使用します（YAML解析は不要）。
     - 時間経過でパラメータが減少し、分岐条件に基づいてキャラクターが進化します。
     - お世話ボタンでパラメータが回復し、キャラクターがセリフをしゃべります。
     - 最終形態になるとゲームが終了し、「はじめから」ボタンでリスタートできます。
+    - 完全にクライアントサイドで動作し、`index.html`をブラウザで直接開くだけで動作します。
 
 - name: "Step 6: Create README"
-  prompt: "プロジェクトの`README.md`を作成します。特徴、遊び方（サーバー不要）、`rules.js`を使った改造方法などを記載してください。"
+  prompt: "プロジェクトの`README.md`を作成します。特徴、遊び方（サーバー不要）、`rules.js`を使った改造方法（JavaScriptオブジェクト形式）などを記載してください。"
 
 - name: "Step 7: Finalize"
-  prompt: "全てのファイルが完成しました。ユーザーに`index.html`を直接ブラウザで開いて動作確認するよう案内し、プロジェクトを完了してください。" 
+  prompt: "全てのファイルが完成しました。ユーザーに`index.html`を直接ブラウザで開いて動作確認するよう案内し、プロジェクトを完了してください。サーバー起動は不要であることを強調してください。" 
